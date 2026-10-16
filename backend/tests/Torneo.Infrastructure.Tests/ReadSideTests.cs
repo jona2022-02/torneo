@@ -74,7 +74,8 @@ public class ReadSideTests
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
             {
-                ["ConnectionStrings:Torneo"] = ConnectionString
+                ["ConnectionStrings:Torneo"] = ConnectionString,
+                ["Auth:SigningKey"] = "TorneoDev_SigningKey_2026_Mundialito"
             })
             .Build();
 

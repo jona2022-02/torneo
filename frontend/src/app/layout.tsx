@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Outfit, Geist } from "next/font/google";
-import { AppShell } from "@/components/layout/app-shell";
+import { AuthGate } from "@/components/auth/auth-gate";
 import { QueryProvider } from "@/components/layout/query-provider";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="es" className={cn("dark h-full", body.variable, display.variable, "font-sans", geist.variable)}>
       <body className="min-h-full bg-paper font-sans text-ink antialiased">
         <QueryProvider>
-          <AppShell>{children}</AppShell>
+          <AuthGate>{children}</AuthGate>
         </QueryProvider>
       </body>
     </html>

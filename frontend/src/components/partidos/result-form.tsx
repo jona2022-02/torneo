@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { Button } from "@/components/layout/button";
 import { Field } from "@/components/layout/field";
+import { SearchSelect } from "@/components/layout/search-select";
 import { usePlayers } from "@/hooks/jugadores/use-players";
 import { useRegisterResult } from "@/hooks/partidos/use-register-result";
 import { isApiError } from "@/services/http/api";
@@ -82,14 +83,13 @@ function GoalLine({
 }) {
   return (
     <div className="grid grid-cols-[1fr_5rem] gap-2">
-      <select value={goal.playerId} onChange={(event) => onChange({ ...goal, playerId: event.target.value })} aria-label="Goleador">
-        <option value="">Jugador</option>
-        {players.map((player) => (
-          <option key={player.id} value={player.id}>
-            {player.shirtNumber} {player.name}
-          </option>
-        ))}
-      </select>
+      <SearchSelect
+        label="Goleador"
+        placeholder="Jugador"
+        value={goal.playerId}
+        onChange={(playerId) => onChange({ ...goal, playerId })}
+        options={players.map((player) => ({ value: player.id, label: `${player.shirtNumber} ${player.name}` }))}
+      />
       <input aria-label="Minuto" type="number" min={1} max={120} value={goal.minute} onChange={(event) => onChange({ ...goal, minute: event.target.value })} />
     </div>
   );

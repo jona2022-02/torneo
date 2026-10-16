@@ -1,3 +1,5 @@
+import { clearSession, readSession } from "@/services/auth/session";
+
 type ErrorBody = { code?: string; message?: string };
 
 export class ApiError extends Error {
@@ -20,12 +22,18 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 
 export async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
   const headers = new Headers(options.headers);
+  const token = readSession()?.token;
+  if (token) headers.set("Authorization", `Bearer ${token}`);
   if (options.body) headers.set("Content-Type", "application/json");
   if ((options.method ?? "GET").toUpperCase() === "POST") {
     headers.set("Idempotency-Key", crypto.randomUUID());
   }
 
   const response = await fetch(`${baseUrl}${path}`, { ...options, headers });
+  if (response.status === 401 && !path.startsWith("/api/auth/")) {
+    clearSession();
+    if (typeof window !== "undefined") window.location.assign("/login");
+  }
   if (response.status === 204) return undefined as T;
 
   const text = await response.text();

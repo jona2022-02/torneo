@@ -27,6 +27,11 @@ internal sealed class DatabaseInitializer : IHostedService
             await scope.ServiceProvider.GetRequiredService<TournamentSeeder>().SeedAsync(cancellationToken);
         }
 
+        if (!await context.Operators.AnyAsync(cancellationToken))
+        {
+            await scope.ServiceProvider.GetRequiredService<OperatorSeeder>().SeedAsync(cancellationToken);
+        }
+
         if (!await context.Database.CanConnectAsync(cancellationToken))
         {
             throw new InvalidOperationException("SQL Server no aceptó la conexión.");

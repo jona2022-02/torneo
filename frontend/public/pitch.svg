@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="mow" width="1600" height="64" patternUnits="userSpaceOnUse">
+      <rect width="1600" height="32" fill="#1b5632"/>
+      <rect y="32" width="1600" height="32" fill="#16492b"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="900" fill="#07140e"/>
+  <rect x="70" y="28" width="1460" height="844" rx="36" fill="#0c1f16"/>
+  <rect x="150" y="78" width="1300" height="744" fill="url(#mow)"/>
+  <g fill="none" stroke="#f3efe4" stroke-width="3" opacity="0.82">
+    <rect x="150" y="78" width="1300" height="744"/>
+    <line x1="800" y1="78" x2="800" y2="822"/>
+    <circle cx="800" cy="450" r="92"/>
+    <rect x="150" y="246" width="168" height="408"/>
+    <rect x="1282" y="246" width="168" height="408"/>
+    <rect x="150" y="330" width="62" height="240"/>
+    <rect x="1388" y="330" width="62" height="240"/>
+    <path d="M318 330a92 92 0 0 1 0 240"/>
+    <path d="M1282 330a92 92 0 0 0 0 240"/>
+  </g>
+  <circle cx="800" cy="450" r="4" fill="#f3efe4"/>
+  <circle cx="268" cy="450" r="3" fill="#f3efe4"/>
+  <circle cx="1332" cy="450" r="3" fill="#f3efe4"/>
+</svg>

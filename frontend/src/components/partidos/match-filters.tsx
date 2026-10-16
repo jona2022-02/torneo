@@ -3,6 +3,7 @@
 import { FormEvent } from "react";
 import { Button } from "@/components/layout/button";
 import { DateTimeField } from "@/components/layout/date-time-field";
+import { SearchSelect } from "@/components/layout/search-select";
 import { useTeams } from "@/hooks/equipos/use-teams";
 import { useShellStore } from "@/stores/use-shell-store";
 
@@ -39,19 +40,25 @@ export function MatchFilters({ onApply }: { onApply: (draft: MatchDraft) => void
     <form onSubmit={submit} className="mb-4 grid gap-2 md:grid-cols-[1fr_1fr_1fr_1fr_auto]">
       <DateTimeField label="Desde" value={drafts[keys.from] ?? ""} onChange={(value) => setDraft(keys.from, value)} />
       <DateTimeField label="Hasta" value={drafts[keys.to] ?? ""} onChange={(value) => setDraft(keys.to, value)} />
-      <select aria-label="Equipo" value={drafts[keys.teamId] ?? ""} onChange={(event) => setDraft(keys.teamId, event.target.value)}>
-        <option value="">Todos los equipos</option>
-        {teams.data?.data.map((team) => (
-          <option key={team.id} value={team.id}>
-            {team.name}
-          </option>
-        ))}
-      </select>
-      <select aria-label="Estado" value={drafts[keys.status] ?? ""} onChange={(event) => setDraft(keys.status, event.target.value)}>
-        <option value="">Cualquier estado</option>
-        <option value="Programado">Programado</option>
-        <option value="Finalizado">Finalizado</option>
-      </select>
+      <SearchSelect
+        label="Equipo"
+        placeholder="Todos los equipos"
+        emptyLabel="Todos los equipos"
+        value={drafts[keys.teamId] ?? ""}
+        onChange={(value) => setDraft(keys.teamId, value)}
+        options={(teams.data?.data ?? []).map((team) => ({ value: team.id, label: team.name }))}
+      />
+      <SearchSelect
+        label="Estado"
+        placeholder="Cualquier estado"
+        emptyLabel="Cualquier estado"
+        value={drafts[keys.status] ?? ""}
+        onChange={(value) => setDraft(keys.status, value)}
+        options={[
+          { value: "Programado", label: "Programado" },
+          { value: "Finalizado", label: "Finalizado" },
+        ]}
+      />
       <Button type="submit" tone="ghost">
         Aplicar
       </Button>

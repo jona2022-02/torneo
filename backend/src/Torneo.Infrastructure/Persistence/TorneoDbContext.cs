@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Torneo.Domain.Goals;
 using Torneo.Domain.Matches;
+using Torneo.Domain.Operators;
 using Torneo.Domain.Players;
 using Torneo.Domain.Teams;
 
@@ -12,6 +13,8 @@ internal sealed class TorneoDbContext : DbContext
         : base(options)
     {
     }
+
+    public DbSet<Operator> Operators => Set<Operator>();
 
     public DbSet<Team> Teams => Set<Team>();
 

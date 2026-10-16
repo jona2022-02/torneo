@@ -84,6 +84,35 @@ namespace Torneo.Infrastructure.Persistence.Migrations
                     b.ToTable("Matches", (string)null);
                 });
 
+            modelBuilder.Entity("Torneo.Domain.Operators.Operator", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Operators", (string)null);
+                });
+
             modelBuilder.Entity("Torneo.Domain.Players.Player", b =>
                 {
                     b.Property<Guid>("Id")

@@ -14,7 +14,7 @@ export function DataPager({
   onPage: (page: number) => void;
 }) {
   return (
-    <div className="mt-4 flex items-center justify-between gap-3 text-sm">
+    <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl border border-line bg-panel px-4 py-2 text-sm text-ink backdrop-blur">
       <span className="text-quiet">{totalRecords} registros</span>
       <div className="flex items-center gap-2">
         <Button tone="ghost" disabled={page <= 1} onClick={() => onPage(page - 1)}>

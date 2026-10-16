@@ -16,6 +16,8 @@ using Torneo.Application.Teams.CreateTeam;
 using Torneo.Application.Teams.DeleteTeam;
 using Torneo.Application.Teams.PatchTeam;
 using Torneo.Application.Teams.UpdateTeam;
+using Torneo.Application.Auth.Login;
+using Torneo.Infrastructure.Auth;
 using Torneo.Infrastructure.Events;
 using Torneo.Infrastructure.Persistence;
 using Torneo.Infrastructure.Persistence.Repositories;
@@ -34,6 +36,12 @@ public static class DependencyInjection
             throw new InvalidOperationException("Falta la cadena de conexión Torneo.");
         }
 
+        var signingKey = configuration["Auth:SigningKey"];
+        if (string.IsNullOrWhiteSpace(signingKey) || signingKey.Length < 32)
+        {
+            throw new InvalidOperationException("Auth:SigningKey debe tener al menos 32 caracteres.");
+        }
+
         services.AddDbContext<TorneoDbContext>(options => options.UseSqlServer(connectionString));
         services.TryAddScoped<IRequestTrace, EmptyRequestTrace>();
         services.AddScoped<DomainEventLog>();
@@ -41,6 +49,11 @@ public static class DependencyInjection
         services.AddScoped<IIdempotencyStore, IdempotencyStore>();
         services.AddScoped<IApplicationTransaction, EfApplicationTransaction>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddSingleton<IPasswordHasher, Pbkdf2PasswordHasher>();
+        services.AddSingleton<IAccessTokenIssuer, JwtAccessTokenIssuer>();
+        services.AddScoped<IOperatorRepository, OperatorRepository>();
+        services.AddScoped<LoginHandler>();
+        services.AddScoped<OperatorSeeder>();
         services.AddScoped<ITeamRepository, TeamRepository>();
         services.AddScoped<IPlayerRepository, PlayerRepository>();
         services.AddScoped<IMatchRepository, MatchRepository>();
