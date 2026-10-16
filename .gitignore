@@ -1,0 +1,12 @@
+# Documentación local de la prueba. No se publica en el repositorio.
+docs/
+
+bin/
+obj/
+.vs/
+*.user
+*.suo
+TestResults/
+node_modules/
+.next/
+frontend/.env.local

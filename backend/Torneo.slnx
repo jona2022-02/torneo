@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Torneo.Api/Torneo.Api.csproj" />
+    <Project Path="src/Torneo.Application/Torneo.Application.csproj" />
+    <Project Path="src/Torneo.Domain/Torneo.Domain.csproj" />
+    <Project Path="src/Torneo.Infrastructure/Torneo.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Torneo.Application.Tests/Torneo.Application.Tests.csproj" />
+    <Project Path="tests/Torneo.Domain.Tests/Torneo.Domain.Tests.csproj" />
+    <Project Path="tests/Torneo.Infrastructure.Tests/Torneo.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>

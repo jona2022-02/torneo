@@ -1,0 +1,42 @@
+.react-datepicker.when-calendar {
+  background-color: #122433;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  color: #eef3f8;
+  font-family: inherit;
+}
+
+.react-datepicker.when-calendar .react-datepicker__header,
+.react-datepicker.when-calendar .react-datepicker__month,
+.react-datepicker.when-calendar .react-datepicker__time-container,
+.react-datepicker.when-calendar .react-datepicker__time,
+.react-datepicker.when-calendar .react-datepicker__time-box {
+  background-color: #122433;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.react-datepicker.when-calendar .react-datepicker__current-month,
+.react-datepicker.when-calendar .react-datepicker-time__header,
+.react-datepicker.when-calendar .react-datepicker__day-name,
+.react-datepicker.when-calendar .react-datepicker__day,
+.react-datepicker.when-calendar .react-datepicker__time-list-item,
+.react-datepicker.when-calendar .react-datepicker__navigation-icon::before {
+  color: #eef3f8;
+}
+
+.react-datepicker.when-calendar .react-datepicker__day--outside-month {
+  color: #93a4b8;
+}
+
+.react-datepicker.when-calendar .react-datepicker__day:hover,
+.react-datepicker.when-calendar .react-datepicker__time-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.react-datepicker.when-calendar .react-datepicker__day--selected,
+.react-datepicker.when-calendar .react-datepicker__day--keyboard-selected,
+.react-datepicker.when-calendar .react-datepicker__time-list-item--selected,
+.react-datepicker.when-calendar .react-datepicker__day--today {
+  background-color: #d6ff4a;
+  color: #10202c;
+}
