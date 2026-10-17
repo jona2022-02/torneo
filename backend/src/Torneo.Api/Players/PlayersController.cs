@@ -44,24 +44,24 @@ public sealed class PlayersController(
 
     [HttpPost("/api/teams/{teamId:guid}/players")]
     [ProducesResponseType(typeof(CreatedResource), StatusCodes.Status201Created)]
-    public async Task<ResultEnvelope> Create(Guid teamId, [FromBody] CreatePlayerRequest request, CancellationToken cancellationToken)
+    public async Task<ResultEnvelope> Create(Guid teamId, [FromBody] CreatePlayerDto request, CancellationToken cancellationToken)
     {
-        var result = await create.Handle(new CreatePlayerCommand(teamId, request.Name, request.ShirtNumber), cancellationToken);
+        var result = await create.Handle(new CreatePlayerCommand(teamId, request.Name ?? "", request.ShirtNumber), cancellationToken);
         var location = result.IsSuccess ? $"/api/players/{result.Value}" : null;
         return HttpResults.Created(result, location);
     }
 
     [HttpPut("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ResultEnvelope> Replace(Guid id, [FromBody] UpdatePlayerRequest request, CancellationToken cancellationToken)
+    public async Task<ResultEnvelope> Replace(Guid id, [FromBody] UpdatePlayerDto request, CancellationToken cancellationToken)
     {
-        var result = await update.Handle(new UpdatePlayerCommand(id, request.Name, request.ShirtNumber), cancellationToken);
+        var result = await update.Handle(new UpdatePlayerCommand(id, request.Name ?? "", request.ShirtNumber), cancellationToken);
         return HttpResults.Ok(result);
     }
 
     [HttpPatch("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ResultEnvelope> Patch(Guid id, [FromBody] PatchPlayerRequest request, CancellationToken cancellationToken)
+    public async Task<ResultEnvelope> Patch(Guid id, [FromBody] PatchPlayerDto request, CancellationToken cancellationToken)
     {
         var result = await patch.Handle(new PatchPlayerCommand(id, request.Name, request.ShirtNumber), cancellationToken);
         return HttpResults.Ok(result);

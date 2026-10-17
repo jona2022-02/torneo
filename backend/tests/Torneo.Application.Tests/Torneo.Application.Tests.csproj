@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Torneo.Application\Torneo.Application.csproj" />
+    <ProjectReference Include="..\..\src\Torneo.Api\Torneo.Api.csproj" />
   </ItemGroup>
 
 </Project>

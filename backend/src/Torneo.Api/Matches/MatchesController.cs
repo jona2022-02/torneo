@@ -40,7 +40,7 @@ public sealed class MatchesController(
 
     [HttpPost]
     [ProducesResponseType(typeof(CreatedResource), StatusCodes.Status201Created)]
-    public async Task<ResultEnvelope> Create([FromBody] CreateMatchRequest request, CancellationToken cancellationToken)
+    public async Task<ResultEnvelope> Create([FromBody] CreateMatchDto request, CancellationToken cancellationToken)
     {
         var result = await create.Handle(new CreateMatchCommand(request.HomeTeamId, request.AwayTeamId, request.Kickoff), cancellationToken);
         var location = result.IsSuccess ? $"/api/matches/{result.Value}" : null;
@@ -49,7 +49,7 @@ public sealed class MatchesController(
 
     [HttpPut("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ResultEnvelope> Replace(Guid id, [FromBody] UpdateMatchRequest request, CancellationToken cancellationToken)
+    public async Task<ResultEnvelope> Replace(Guid id, [FromBody] UpdateMatchDto request, CancellationToken cancellationToken)
     {
         var result = await update.Handle(new UpdateMatchCommand(id, request.HomeTeamId, request.AwayTeamId, request.Kickoff), cancellationToken);
         return HttpResults.Ok(result);
@@ -65,7 +65,7 @@ public sealed class MatchesController(
 
     [HttpPut("{id:guid}/result")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ResultEnvelope> RegisterResult(Guid id, [FromBody] RegisterResultRequest request, CancellationToken cancellationToken)
+    public async Task<ResultEnvelope> RegisterResult(Guid id, [FromBody] RegisterResultDto request, CancellationToken cancellationToken)
     {
         var goals = (request.Goals ?? []).Select(goal => new GoalLine(goal.PlayerId, goal.Minute)).ToArray();
         var result = await register.Handle(new RegisterMatchResultCommand(id, request.HomeScore, request.AwayScore, goals), cancellationToken);

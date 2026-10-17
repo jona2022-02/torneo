@@ -40,24 +40,24 @@ public sealed class TeamsController(
 
     [HttpPost]
     [ProducesResponseType(typeof(CreatedResource), StatusCodes.Status201Created)]
-    public async Task<ResultEnvelope> Create([FromBody] CreateTeamRequest request, CancellationToken cancellationToken)
+    public async Task<ResultEnvelope> Create([FromBody] CreateTeamDto request, CancellationToken cancellationToken)
     {
-        var result = await create.Handle(new CreateTeamCommand(request.Name), cancellationToken);
+        var result = await create.Handle(new CreateTeamCommand(request.Name ?? ""), cancellationToken);
         var location = result.IsSuccess ? $"/api/teams/{result.Value}" : null;
         return HttpResults.Created(result, location);
     }
 
     [HttpPut("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ResultEnvelope> Replace(Guid id, [FromBody] UpdateTeamRequest request, CancellationToken cancellationToken)
+    public async Task<ResultEnvelope> Replace(Guid id, [FromBody] UpdateTeamDto request, CancellationToken cancellationToken)
     {
-        var result = await update.Handle(new UpdateTeamCommand(id, request.Name), cancellationToken);
+        var result = await update.Handle(new UpdateTeamCommand(id, request.Name ?? ""), cancellationToken);
         return HttpResults.Ok(result);
     }
 
     [HttpPatch("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ResultEnvelope> Patch(Guid id, [FromBody] PatchTeamRequest request, CancellationToken cancellationToken)
+    public async Task<ResultEnvelope> Patch(Guid id, [FromBody] PatchTeamDto request, CancellationToken cancellationToken)
     {
         var result = await patch.Handle(new PatchTeamCommand(id, request.Name), cancellationToken);
         return HttpResults.Ok(result);
