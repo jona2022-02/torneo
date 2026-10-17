@@ -18,7 +18,7 @@ docker compose up --build
 - Usuario: `admin`
 - Contraseña: `TorneoDev_2026!`
 
-La API espera a SQL Server, aplica las migraciones y, si la base está vacía, carga la semilla: Real Madrid, Barcelona, Atlético de Madrid y Bayern Múnich, con seis partidos y tres resultados.
+La API espera a SQL Server, aplica las migraciones y, si la base está vacía, carga la data: Real Madrid, Barcelona, Atlético de Madrid y Bayern Múnich, con seis partidos y tres resultados.
 
 Para trabajar en local, deja solo la base en Docker y corre API y frontend en la máquina:
 
@@ -49,7 +49,4 @@ La colección de Postman está en `postman/`. El entorno `Local` apunta a `http:
 
 El diagrama está en [docs/arquitectura.md](docs/arquitectura.md).
 
-## Fuera de alcance
 
-- Broker de mensajería externo. Los eventos de dominio se registran en el log.
-- Kubernetes.
