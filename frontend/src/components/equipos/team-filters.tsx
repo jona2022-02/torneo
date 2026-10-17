@@ -9,10 +9,16 @@ const draftKey = "teams.name";
 export function TeamFilters({ onApply }: { onApply: (name: string) => void }) {
   const draft = useShellStore((state) => state.drafts[draftKey] ?? "");
   const setDraft = useShellStore((state) => state.setDraft);
+  const clearDrafts = useShellStore((state) => state.clearDrafts);
 
   function submit(event: FormEvent) {
     event.preventDefault();
     onApply(draft.trim());
+  }
+
+  function clear() {
+    clearDrafts([draftKey]);
+    onApply("");
   }
 
   return (
@@ -26,6 +32,9 @@ export function TeamFilters({ onApply }: { onApply: (name: string) => void }) {
       />
       <Button type="submit" tone="ghost">
         Aplicar
+      </Button>
+      <Button type="button" tone="ghost" onClick={clear}>
+        Limpiar
       </Button>
     </form>
   );

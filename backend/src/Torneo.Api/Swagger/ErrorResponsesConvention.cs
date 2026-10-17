@@ -13,6 +13,7 @@ public sealed class ErrorResponsesConvention : IApplicationModelConvention
             action.Filters.Add(new ProducesResponseTypeAttribute(typeof(ApiError), StatusCodes.Status400BadRequest));
             action.Filters.Add(new ProducesResponseTypeAttribute(typeof(ApiError), StatusCodes.Status404NotFound));
             action.Filters.Add(new ProducesResponseTypeAttribute(typeof(ApiError), StatusCodes.Status409Conflict));
+            action.Filters.Add(new ProducesResponseTypeAttribute(typeof(ApiError), StatusCodes.Status429TooManyRequests));
         }
     }
 }

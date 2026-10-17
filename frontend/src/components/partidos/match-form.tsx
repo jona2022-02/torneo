@@ -8,7 +8,7 @@ import { SearchSelect } from "@/components/layout/search-select";
 import { useTeams } from "@/hooks/equipos/use-teams";
 import { useCreateMatch } from "@/hooks/partidos/use-create-match";
 import { toApiDate } from "@/lib/format";
-import { isApiError } from "@/services/http/api";
+import { failureNotice } from "@/components/layout/toaster";
 import { useShellStore } from "@/stores/use-shell-store";
 
 export function MatchForm({ onCreated }: { onCreated: () => void }) {
@@ -16,7 +16,6 @@ export function MatchForm({ onCreated }: { onCreated: () => void }) {
   const [home, setHome] = useState("");
   const [away, setAway] = useState("");
   const [kickoff, setKickoff] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const create = useCreateMatch();
   const notify = useShellStore((state) => state.notify);
 
@@ -24,7 +23,6 @@ export function MatchForm({ onCreated }: { onCreated: () => void }) {
     event.preventDefault();
     const when = toApiDate(kickoff);
     if (!when) return;
-    setError(null);
     create.mutate(
       { homeTeamId: home, awayTeamId: away, kickoff: when },
       {
@@ -32,11 +30,7 @@ export function MatchForm({ onCreated }: { onCreated: () => void }) {
           notify({ tone: "ok", text: "Partido programado." });
           onCreated();
         },
-        onError: (failure) => {
-          const code = isApiError(failure) ? failure.code : "error";
-          const message = failure instanceof Error ? failure.message : "No se pudo programar el partido.";
-          setError(`${code}: ${message}`);
-        },
+        onError: (failure) => notify(failureNotice(failure, "No se pudo programar el partido.")),
       },
     );
   }
@@ -64,7 +58,6 @@ export function MatchForm({ onCreated }: { onCreated: () => void }) {
       <Field label="Fecha y hora">
         <DateTimeField value={kickoff} onChange={setKickoff} label="Fecha y hora" required />
       </Field>
-      {error ? <p className="text-sm text-danger">{error}</p> : null}
       <Button type="submit" disabled={create.isPending}>
         {create.isPending ? "Guardando..." : "Programar partido"}
       </Button>

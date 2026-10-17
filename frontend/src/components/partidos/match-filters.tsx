@@ -24,6 +24,7 @@ const keys = {
 export function MatchFilters({ onApply }: { onApply: (draft: MatchDraft) => void }) {
   const drafts = useShellStore((state) => state.drafts);
   const setDraft = useShellStore((state) => state.setDraft);
+  const clearDrafts = useShellStore((state) => state.clearDrafts);
   const teams = useTeams({ pageNumber: 1, pageSize: 50, sortBy: "name", sortDirection: "asc" });
 
   function submit(event: FormEvent) {
@@ -34,6 +35,11 @@ export function MatchFilters({ onApply }: { onApply: (draft: MatchDraft) => void
       teamId: drafts[keys.teamId] ?? "",
       status: drafts[keys.status] ?? "",
     });
+  }
+
+  function clear() {
+    clearDrafts([keys.from, keys.to, keys.teamId, keys.status]);
+    onApply({ from: "", to: "", teamId: "", status: "" });
   }
 
   return (
@@ -59,9 +65,14 @@ export function MatchFilters({ onApply }: { onApply: (draft: MatchDraft) => void
           { value: "Finalizado", label: "Finalizado" },
         ]}
       />
-      <Button type="submit" tone="ghost">
-        Aplicar
-      </Button>
+      <div className="flex gap-2">
+        <Button type="submit" tone="ghost">
+          Aplicar
+        </Button>
+        <Button type="button" tone="ghost" onClick={clear}>
+          Limpiar
+        </Button>
+      </div>
     </form>
   );
 }

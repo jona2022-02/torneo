@@ -4,19 +4,17 @@ import { FormEvent, useState } from "react";
 import { Button } from "@/components/layout/button";
 import { Field } from "@/components/layout/field";
 import { useCreatePlayer } from "@/hooks/jugadores/use-create-player";
-import { isApiError } from "@/services/http/api";
+import { failureNotice } from "@/components/layout/toaster";
 import { useShellStore } from "@/stores/use-shell-store";
 
 export function PlayerForm({ teamId, onCreated }: { teamId: string; onCreated: () => void }) {
   const [name, setName] = useState("");
   const [shirt, setShirt] = useState("1");
-  const [error, setError] = useState<string | null>(null);
   const create = useCreatePlayer();
   const notify = useShellStore((state) => state.notify);
 
   function submit(event: FormEvent) {
     event.preventDefault();
-    setError(null);
     create.mutate(
       { teamId, name: name.trim(), shirtNumber: Number(shirt) },
       {
@@ -24,11 +22,7 @@ export function PlayerForm({ teamId, onCreated }: { teamId: string; onCreated: (
           notify({ tone: "ok", text: "Jugador registrado." });
           onCreated();
         },
-        onError: (failure) => {
-          const code = isApiError(failure) ? failure.code : "error";
-          const message = failure instanceof Error ? failure.message : "No se pudo registrar el jugador.";
-          setError(`${code}: ${message}`);
-        },
+        onError: (failure) => notify(failureNotice(failure, "No se pudo registrar el jugador.")),
       },
     );
   }
@@ -41,7 +35,6 @@ export function PlayerForm({ teamId, onCreated }: { teamId: string; onCreated: (
       <Field label="Dorsal">
         <input value={shirt} onChange={(event) => setShirt(event.target.value)} type="number" min={1} max={99} required />
       </Field>
-      {error ? <p className="text-sm text-danger">{error}</p> : null}
       <Button type="submit" disabled={create.isPending}>
         {create.isPending ? "Guardando..." : "Registrar jugador"}
       </Button>

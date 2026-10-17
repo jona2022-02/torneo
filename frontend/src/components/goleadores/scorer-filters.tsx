@@ -11,11 +11,17 @@ const draftKey = "scorers.teamId";
 export function ScorerFilters({ onApply }: { onApply: (teamId: string) => void }) {
   const draft = useShellStore((state) => state.drafts[draftKey] ?? "");
   const setDraft = useShellStore((state) => state.setDraft);
+  const clearDrafts = useShellStore((state) => state.clearDrafts);
   const teams = useTeams({ pageNumber: 1, pageSize: 50, sortBy: "name", sortDirection: "asc" });
 
   function submit(event: FormEvent) {
     event.preventDefault();
     onApply(draft);
+  }
+
+  function clear() {
+    clearDrafts([draftKey]);
+    onApply("");
   }
 
   return (
@@ -32,6 +38,9 @@ export function ScorerFilters({ onApply }: { onApply: (teamId: string) => void }
       </div>
       <Button type="submit" tone="ghost">
         Aplicar
+      </Button>
+      <Button type="button" tone="ghost" onClick={clear}>
+        Limpiar
       </Button>
     </form>
   );

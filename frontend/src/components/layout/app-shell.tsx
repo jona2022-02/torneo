@@ -1,6 +1,5 @@
 "use client";
 
-import { NoticeBar } from "@/components/layout/notice-bar";
 import { SideNav } from "@/components/layout/side-nav";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -8,7 +7,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen md:flex">
       <SideNav />
       <div className="min-w-0 flex-1">
-        <NoticeBar />
         <main className="px-4 py-6 md:px-10 md:py-8">{children}</main>
       </div>
     </div>

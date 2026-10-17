@@ -4,6 +4,7 @@ public static class ErrorCodes
 {
     public const string Validation = "validation";
     public const string AuthInvalid = "auth.invalid";
+    public const string RateLimit = "rate_limit";
     public const string NotFound = "not_found";
     public const string Conflict = "conflict";
     public const string IdempotencyMissingKey = "idempotency.missing_key";

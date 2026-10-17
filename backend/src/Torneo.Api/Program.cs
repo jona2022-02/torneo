@@ -46,7 +46,7 @@ builder.Services.AddCors(options =>
         .WithOrigins("http://localhost:3000")
         .AllowAnyHeader()
         .AllowAnyMethod()
-        .WithExposedHeaders(CorrelationKeys.Header));
+        .WithExposedHeaders(CorrelationKeys.Header, "Retry-After"));
 });
 var signingKey = builder.Configuration["Auth:SigningKey"]!;
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -69,6 +69,7 @@ builder.Services.AddAuthorization(options =>
         .RequireAuthenticatedUser()
         .Build();
 });
+builder.Services.AddTorneoRateLimit(builder.Configuration);
 builder.Services.AddTorneoSwagger();
 
 var app = builder.Build();
@@ -79,6 +80,7 @@ app.UseCors("frontend");
 app.UseTorneoSwagger();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRateLimiter();
 app.UseMiddleware<IdempotencyMiddleware>();
 app.MapControllers();
 app.MapHealthChecks("/health").AllowAnonymous();

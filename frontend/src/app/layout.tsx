@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Outfit, Geist } from "next/font/google";
 import { AuthGate } from "@/components/auth/auth-gate";
 import { QueryProvider } from "@/components/layout/query-provider";
+import { Toaster } from "@/components/layout/toaster";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full bg-paper font-sans text-ink antialiased">
         <QueryProvider>
           <AuthGate>{children}</AuthGate>
+          <Toaster />
         </QueryProvider>
       </body>
     </html>
