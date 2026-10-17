@@ -12,7 +12,7 @@ export function PlayerTable({ players }: { players: Player[] }) {
     () => [
       {
         accessorKey: "shirtNumber",
-        header: "Dorsal",
+        header: "Número",
         cell: ({ row }) => <Badge>{row.original.shirtNumber}</Badge>,
       },
       {

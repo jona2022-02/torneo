@@ -34,7 +34,7 @@ export function PlayerForm({ teamId, onCreated }: { teamId: string; onCreated: (
       <Field label="Nombre">
         <input value={name} onChange={(event) => setName(event.target.value)} maxLength={80} required />
       </Field>
-      <Field label="Dorsal">
+      <Field label="Número">
         <input value={shirt} onChange={(event) => setShirt(event.target.value)} type="number" min={1} max={99} required />
       </Field>
       <Field label="Puesto">
