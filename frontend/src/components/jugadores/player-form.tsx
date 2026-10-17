@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { Button } from "@/components/layout/button";
 import { Field } from "@/components/layout/field";
 import { SearchSelect } from "@/components/layout/search-select";
+import { playerRoles } from "@/components/jugadores/player-roles";
 import { useCreatePlayer } from "@/hooks/jugadores/use-create-player";
 import { failureNotice } from "@/components/layout/toaster";
 import { useShellStore } from "@/stores/use-shell-store";
@@ -43,12 +44,7 @@ export function PlayerForm({ teamId, onCreated }: { teamId: string; onCreated: (
           placeholder="Elegir puesto"
           value={role}
           onChange={setRole}
-          options={[
-            { value: "Portero", label: "Portero" },
-            { value: "Defensa", label: "Defensa" },
-            { value: "Volante", label: "Volante" },
-            { value: "Delantero", label: "Delantero" },
-          ]}
+          options={playerRoles}
         />
       </Field>
       <Button type="submit" disabled={create.isPending}>

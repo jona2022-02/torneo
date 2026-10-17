@@ -1,7 +1,7 @@
 "use client";
 
 import { es } from "date-fns/locale/es";
-import { ReactNode } from "react";
+import { forwardRef, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { parseLocal, toLocalValue } from "@/lib/format";
@@ -14,6 +14,10 @@ function PopperBox({ children }: { children?: ReactNode }) {
   if (typeof document === "undefined") return children;
   return createPortal(children, document.body);
 }
+
+const PickerInput = forwardRef<HTMLInputElement, React.ComponentProps<"input">>(function PickerInput(props, ref) {
+  return <input {...props} ref={ref} readOnly className="cursor-pointer" />;
+});
 
 export function DateTimeField({
   value,
@@ -28,6 +32,7 @@ export function DateTimeField({
 }) {
   return (
     <DatePicker
+      customInput={<PickerInput />}
       selected={parseLocal(value)}
       onChange={(date: Date | null) => onChange(date ? toLocalValue(date) : "")}
       showTimeSelect
@@ -41,6 +46,7 @@ export function DateTimeField({
       wrapperClassName="block w-full"
       calendarClassName="when-calendar"
       popperClassName="when-popper"
+      popperPlacement="bottom-end"
       popperContainer={PopperBox}
     />
   );

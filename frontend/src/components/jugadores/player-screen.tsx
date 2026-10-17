@@ -12,8 +12,10 @@ import { TableSkeleton } from "@/components/layout/table-skeleton";
 import { Lineup } from "@/components/jugadores/lineup";
 import { PlayerForm } from "@/components/jugadores/player-form";
 import { PlayerTable } from "@/components/jugadores/player-table";
+import { RoleForm } from "@/components/jugadores/role-form";
 import { useTeam } from "@/hooks/equipos/use-team";
 import { usePlayers } from "@/hooks/jugadores/use-players";
+import { Player } from "@/services/jugadores/player.types";
 
 export function PlayerScreen() {
   const params = useParams<{ id: string }>();
@@ -21,6 +23,7 @@ export function PlayerScreen() {
   const team = useTeam(teamId);
   const players = usePlayers({ teamId, pageNumber: 1, pageSize: 50, sortBy: "shirtNumber", sortDirection: "asc" });
   const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState<Player | null>(null);
 
   return (
     <>
@@ -41,11 +44,14 @@ export function PlayerScreen() {
       {players.data && players.data.data.length > 0 ? (
         <>
           <Lineup players={players.data.data} />
-          <PlayerTable players={players.data.data} />
+          <PlayerTable players={players.data.data} onEdit={setEditing} />
         </>
       ) : null}
       <SidePanel open={open} title="Nuevo jugador" onClose={() => setOpen(false)}>
         <PlayerForm teamId={teamId} onCreated={() => setOpen(false)} />
+      </SidePanel>
+      <SidePanel open={editing !== null} title="Cambiar puesto" onClose={() => setEditing(null)}>
+        {editing ? <RoleForm key={editing.id} player={editing} onSaved={() => setEditing(null)} /> : null}
       </SidePanel>
     </>
   );

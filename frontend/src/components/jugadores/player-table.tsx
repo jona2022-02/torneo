@@ -2,12 +2,13 @@
 
 import { type LegacyColumnDef } from "@tanstack/react-table/legacy";
 import { useMemo } from "react";
+import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/layout/data-table";
 import { Monogram } from "@/components/layout/monogram";
 import { Badge } from "@/components/ui/badge";
 import { Player } from "@/services/jugadores/player.types";
 
-export function PlayerTable({ players }: { players: Player[] }) {
+export function PlayerTable({ players, onEdit }: { players: Player[]; onEdit: (player: Player) => void }) {
   const columns = useMemo<LegacyColumnDef<Player>[]>(
     () => [
       {
@@ -35,8 +36,17 @@ export function PlayerTable({ players }: { players: Player[] }) {
         header: "Equipo",
         cell: ({ row }) => <span className="text-muted-foreground">{row.original.teamName}</span>,
       },
+      {
+        id: "edit",
+        header: "",
+        cell: ({ row }) => (
+          <Button variant="ghost" size="sm" onClick={() => onEdit(row.original)}>
+            Editar
+          </Button>
+        ),
+      },
     ],
-    [],
+    [onEdit],
   );
 
   return <DataTable columns={columns} data={players} />;

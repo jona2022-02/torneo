@@ -8,13 +8,13 @@ import { Badge } from "@/components/ui/badge";
 import { Standing } from "@/services/tabla/standing.types";
 
 const stats = [
-  ["played", "PJ"],
-  ["won", "PG"],
-  ["drawn", "PE"],
-  ["lost", "PP"],
-  ["goalsFor", "GF"],
-  ["goalsAgainst", "GC"],
-  ["goalDifference", "DG"],
+  ["played", "Partidos jugados"],
+  ["won", "Partidos ganados"],
+  ["drawn", "Partidos empatados"],
+  ["lost", "Partidos perdidos"],
+  ["goalsFor", "Goles a favor"],
+  ["goalsAgainst", "Goles en contra"],
+  ["goalDifference", "Diferencia de goles"],
 ] as const;
 
 export function StandingsTable({ rows, offset }: { rows: Standing[]; offset: number }) {
@@ -38,13 +38,13 @@ export function StandingsTable({ rows, offset }: { rows: Standing[]; offset: num
       ...stats.map(
         ([key, label]): LegacyColumnDef<Standing> => ({
           accessorKey: key,
-          header: () => <span className="block text-right">{label}</span>,
+          header: () => <span className="block w-24 text-right leading-tight whitespace-normal">{label}</span>,
           cell: ({ row }) => <span className="block text-right tabular-nums text-muted-foreground">{row.original[key]}</span>,
         }),
       ),
       {
         accessorKey: "points",
-        header: () => <span className="block text-right">Pts</span>,
+        header: () => <span className="block text-right">Puntos</span>,
         cell: ({ row }) => (
           <span className="block text-right">
             <Badge>{row.original.points}</Badge>
