@@ -1,5 +1,6 @@
 # Documentación local de la prueba. No se publica en el repositorio.
-docs/
+docs/*
+!docs/arquitectura.md
 
 bin/
 obj/
