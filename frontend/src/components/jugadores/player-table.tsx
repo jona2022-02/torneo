@@ -26,6 +26,11 @@ export function PlayerTable({ players }: { players: Player[] }) {
         ),
       },
       {
+        accessorKey: "role",
+        header: "Puesto",
+        cell: ({ row }) => <span>{row.original.role}</span>,
+      },
+      {
         accessorKey: "teamName",
         header: "Equipo",
         cell: ({ row }) => <span className="text-muted-foreground">{row.original.teamName}</span>,

@@ -10,6 +10,8 @@ public interface IPlayerRepository
 
     Task<bool> ShirtNumberExistsAsync(Guid teamId, int shirtNumber, Guid? excludingId, CancellationToken cancellationToken);
 
+    Task<bool> GoalkeeperExistsAsync(Guid teamId, Guid? excludingId, CancellationToken cancellationToken);
+
     Task<bool> AnyInTeamAsync(Guid teamId, CancellationToken cancellationToken);
 
     void Add(Player player);

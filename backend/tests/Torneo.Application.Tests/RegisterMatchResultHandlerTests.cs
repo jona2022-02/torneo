@@ -88,6 +88,9 @@ public class RegisterMatchResultHandlerTests
         public Task<bool> ShirtNumberExistsAsync(Guid teamId, int shirtNumber, Guid? excludingId, CancellationToken cancellationToken) =>
             Task.FromResult(false);
 
+        public Task<bool> GoalkeeperExistsAsync(Guid teamId, Guid? excludingId, CancellationToken cancellationToken) =>
+            Task.FromResult(false);
+
         public Task<bool> AnyInTeamAsync(Guid teamId, CancellationToken cancellationToken) => Task.FromResult(false);
 
         public void Add(Player player)

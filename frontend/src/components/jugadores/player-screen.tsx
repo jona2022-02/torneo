@@ -9,6 +9,7 @@ import { ErrorState } from "@/components/layout/error-state";
 import { PageHeader } from "@/components/layout/page-header";
 import { SidePanel } from "@/components/layout/side-panel";
 import { TableSkeleton } from "@/components/layout/table-skeleton";
+import { Lineup } from "@/components/jugadores/lineup";
 import { PlayerForm } from "@/components/jugadores/player-form";
 import { PlayerTable } from "@/components/jugadores/player-table";
 import { useTeam } from "@/hooks/equipos/use-team";
@@ -37,7 +38,12 @@ export function PlayerScreen() {
       {players.data && players.data.data.length === 0 ? (
         <EmptyState title="Este equipo todavía no tiene jugadores." action={<Button onClick={() => setOpen(true)}>Registrar jugador</Button>} />
       ) : null}
-      {players.data && players.data.data.length > 0 ? <PlayerTable players={players.data.data} /> : null}
+      {players.data && players.data.data.length > 0 ? (
+        <>
+          <Lineup players={players.data.data} />
+          <PlayerTable players={players.data.data} />
+        </>
+      ) : null}
       <SidePanel open={open} title="Nuevo jugador" onClose={() => setOpen(false)}>
         <PlayerForm teamId={teamId} onCreated={() => setOpen(false)} />
       </SidePanel>

@@ -47,10 +47,12 @@ internal sealed class TournamentSeeder
         for (var index = 0; index < TournamentCatalog.Teams.Length; index++)
         {
             var team = TournamentCatalog.Teams[index];
-            for (var shirt = 1; shirt <= TournamentCatalog.Players[index].Length; shirt++)
+            var squad = TournamentCatalog.Players[index];
+            for (var shirt = 1; shirt <= squad.Length; shirt++)
             {
+                var player = squad[shirt - 1];
                 var created = await _players.Handle(
-                    new CreatePlayerCommand(teams[team], TournamentCatalog.Players[index][shirt - 1], shirt),
+                    new CreatePlayerCommand(teams[team], player.Name, shirt, player.Role),
                     cancellationToken);
                 if (created.IsFailure)
                 {

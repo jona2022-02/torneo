@@ -33,6 +33,13 @@ internal sealed class PlayerRepository : IPlayerRepository
                 && (!excludingId.HasValue || player.Id != excludingId.Value),
             cancellationToken);
 
+    public Task<bool> GoalkeeperExistsAsync(Guid teamId, Guid? excludingId, CancellationToken cancellationToken) =>
+        _context.Players.AnyAsync(
+            player => player.TeamId == teamId
+                && player.Role == LineupRole.Portero
+                && (!excludingId.HasValue || player.Id != excludingId.Value),
+            cancellationToken);
+
     public Task<bool> AnyInTeamAsync(Guid teamId, CancellationToken cancellationToken) =>
         _context.Players.AnyAsync(player => player.TeamId == teamId, cancellationToken);
 

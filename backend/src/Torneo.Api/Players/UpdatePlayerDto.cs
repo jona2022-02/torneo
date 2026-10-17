@@ -8,6 +8,8 @@ public sealed class UpdatePlayerDto
     public string? Name { get; init; }
 
     public int ShirtNumber { get; init; }
+
+    public string? Role { get; init; }
 }
 
 public sealed class UpdatePlayerDtoValidator : AbstractValidator<UpdatePlayerDto>
@@ -21,5 +23,9 @@ public sealed class UpdatePlayerDtoValidator : AbstractValidator<UpdatePlayerDto
         RuleFor(dto => dto.ShirtNumber)
             .InclusiveBetween(Player.MinShirtNumber, Player.MaxShirtNumber)
             .WithMessage("El dorsal debe estar entre 1 y 99.");
+
+        RuleFor(dto => dto.Role)
+            .Must(role => LineupRoles.TryParse(role, out _))
+            .WithMessage("El puesto debe ser portero, defensa, volante o delantero.");
     }
 }

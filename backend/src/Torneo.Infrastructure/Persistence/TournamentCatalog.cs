@@ -1,4 +1,8 @@
+using Torneo.Domain.Players;
+
 namespace Torneo.Infrastructure.Persistence;
+
+internal sealed record SeedPlayer(string Name, LineupRole Role);
 
 internal sealed record SeedGoal(string Team, int Shirt, int Minute);
 
@@ -16,12 +20,60 @@ internal static class TournamentCatalog
     public static readonly string[] Teams =
         ["Real Madrid", "Barcelona", "Atlético de Madrid", "Bayern Múnich"];
 
-    public static readonly string[][] Players =
+    public static readonly SeedPlayer[][] Players =
     [
-        ["Thibaut Courtois", "Dani Carvajal", "Éder Militão", "Federico Valverde", "Kylian Mbappé"],
-        ["Marc-André ter Stegen", "Jules Koundé", "Ronald Araújo", "Pedri", "Robert Lewandowski"],
-        ["Jan Oblak", "Antoine Griezmann", "José María Giménez", "Rodrigo De Paul", "Julián Álvarez"],
-        ["Manuel Neuer", "Joshua Kimmich", "Alphonso Davies", "Harry Kane", "Jamal Musiala"]
+        [
+            new("Thibaut Courtois", LineupRole.Portero),
+            new("Dani Carvajal", LineupRole.Defensa),
+            new("Éder Militão", LineupRole.Defensa),
+            new("Federico Valverde", LineupRole.Volante),
+            new("Kylian Mbappé", LineupRole.Delantero),
+            new("Antonio Rüdiger", LineupRole.Defensa),
+            new("Vinícius Júnior", LineupRole.Delantero),
+            new("Jude Bellingham", LineupRole.Volante),
+            new("Rodrygo", LineupRole.Delantero),
+            new("Luka Modrić", LineupRole.Volante),
+            new("Ferland Mendy", LineupRole.Defensa)
+        ],
+        [
+            new("Marc-André ter Stegen", LineupRole.Portero),
+            new("Jules Koundé", LineupRole.Defensa),
+            new("Ronald Araújo", LineupRole.Defensa),
+            new("Pedri", LineupRole.Volante),
+            new("Robert Lewandowski", LineupRole.Delantero),
+            new("Pau Cubarsí", LineupRole.Defensa),
+            new("Lamine Yamal", LineupRole.Delantero),
+            new("Frenkie de Jong", LineupRole.Volante),
+            new("Raphinha", LineupRole.Delantero),
+            new("Gavi", LineupRole.Volante),
+            new("Alejandro Balde", LineupRole.Defensa)
+        ],
+        [
+            new("Jan Oblak", LineupRole.Portero),
+            new("Antoine Griezmann", LineupRole.Delantero),
+            new("José María Giménez", LineupRole.Defensa),
+            new("Rodrigo De Paul", LineupRole.Volante),
+            new("Julián Álvarez", LineupRole.Delantero),
+            new("Axel Witsel", LineupRole.Defensa),
+            new("Nahuel Molina", LineupRole.Defensa),
+            new("Koke", LineupRole.Volante),
+            new("Alexander Sørloth", LineupRole.Delantero),
+            new("Marcos Llorente", LineupRole.Volante),
+            new("Reinildo Mandava", LineupRole.Defensa)
+        ],
+        [
+            new("Manuel Neuer", LineupRole.Portero),
+            new("Joshua Kimmich", LineupRole.Defensa),
+            new("Alphonso Davies", LineupRole.Defensa),
+            new("Harry Kane", LineupRole.Delantero),
+            new("Jamal Musiala", LineupRole.Delantero),
+            new("Dayot Upamecano", LineupRole.Defensa),
+            new("Raphaël Guerreiro", LineupRole.Defensa),
+            new("Leon Goretzka", LineupRole.Volante),
+            new("Leroy Sané", LineupRole.Volante),
+            new("Thomas Müller", LineupRole.Volante),
+            new("Serge Gnabry", LineupRole.Delantero)
+        ]
     ];
 
     public static readonly SeedFixture[] Fixtures =

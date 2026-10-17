@@ -7,6 +7,7 @@ using Torneo.Application.Players.GetPlayers;
 using Torneo.Application.Players.PatchPlayer;
 using Torneo.Application.Players.UpdatePlayer;
 using Torneo.Domain.Common;
+using Torneo.Domain.Players;
 
 namespace Torneo.Api.Players;
 
@@ -46,7 +47,8 @@ public sealed class PlayersController(
     [ProducesResponseType(typeof(CreatedResource), StatusCodes.Status201Created)]
     public async Task<ResultEnvelope> Create(Guid teamId, [FromBody] CreatePlayerDto request, CancellationToken cancellationToken)
     {
-        var result = await create.Handle(new CreatePlayerCommand(teamId, request.Name ?? "", request.ShirtNumber), cancellationToken);
+        LineupRoles.TryParse(request.Role, out var role);
+        var result = await create.Handle(new CreatePlayerCommand(teamId, request.Name ?? "", request.ShirtNumber, role), cancellationToken);
         var location = result.IsSuccess ? $"/api/players/{result.Value}" : null;
         return HttpResults.Created(result, location);
     }
@@ -55,7 +57,8 @@ public sealed class PlayersController(
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ResultEnvelope> Replace(Guid id, [FromBody] UpdatePlayerDto request, CancellationToken cancellationToken)
     {
-        var result = await update.Handle(new UpdatePlayerCommand(id, request.Name ?? "", request.ShirtNumber), cancellationToken);
+        LineupRoles.TryParse(request.Role, out var role);
+        var result = await update.Handle(new UpdatePlayerCommand(id, request.Name ?? "", request.ShirtNumber, role), cancellationToken);
         return HttpResults.Ok(result);
     }
 
@@ -63,7 +66,8 @@ public sealed class PlayersController(
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ResultEnvelope> Patch(Guid id, [FromBody] PatchPlayerDto request, CancellationToken cancellationToken)
     {
-        var result = await patch.Handle(new PatchPlayerCommand(id, request.Name, request.ShirtNumber), cancellationToken);
+        LineupRole? role = request.Role is null ? null : LineupRoles.TryParse(request.Role, out var parsed) ? parsed : null;
+        var result = await patch.Handle(new PatchPlayerCommand(id, request.Name, request.ShirtNumber, role), cancellationToken);
         return HttpResults.Ok(result);
     }
 

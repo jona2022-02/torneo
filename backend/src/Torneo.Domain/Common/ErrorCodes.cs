@@ -12,6 +12,7 @@ public static class ErrorCodes
     public const string TeamNameDuplicate = "team.name.duplicate";
     public const string TeamHasMatches = "team.has_matches";
     public const string PlayerDuplicateNumber = "player.duplicate_number";
+    public const string PlayerGoalkeeperTaken = "player.goalkeeper.taken";
     public const string PlayerHasGoals = "player.has_goals";
     public const string MatchSameTeam = "match.same_team";
     public const string MatchResultGoalMismatch = "match.result.goal_mismatch";

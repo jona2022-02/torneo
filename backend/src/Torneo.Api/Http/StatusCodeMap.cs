@@ -14,6 +14,7 @@ public static class StatusCodeMap
             or ErrorCodes.TeamNameDuplicate
             or ErrorCodes.TeamHasMatches
             or ErrorCodes.PlayerDuplicateNumber
+            or ErrorCodes.PlayerGoalkeeperTaken
             or ErrorCodes.PlayerHasGoals => StatusCodes.Status409Conflict,
         _ => StatusCodes.Status400BadRequest
     };

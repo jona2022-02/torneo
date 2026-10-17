@@ -41,7 +41,8 @@ internal sealed class PlayerQueries : IPlayerQueries
 
         var countSql = $"SELECT COUNT(1) {filter}";
         var pageSql = $"""
-            SELECT p.Id, p.TeamId, t.Name AS TeamName, p.Name, p.ShirtNumber
+            SELECT p.Id, p.TeamId, t.Name AS TeamName, p.Name, p.ShirtNumber,
+                   CASE p.Role WHEN 0 THEN 'Portero' WHEN 2 THEN 'Volante' WHEN 3 THEN 'Delantero' ELSE 'Defensa' END AS Role
             {filter}
             ORDER BY {orderBy}
             OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY
@@ -57,7 +58,8 @@ internal sealed class PlayerQueries : IPlayerQueries
     public async Task<PlayerDetail?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         const string sql = """
-            SELECT p.Id, p.TeamId, t.Name AS TeamName, p.Name, p.ShirtNumber
+            SELECT p.Id, p.TeamId, t.Name AS TeamName, p.Name, p.ShirtNumber,
+                   CASE p.Role WHEN 0 THEN 'Portero' WHEN 2 THEN 'Volante' WHEN 3 THEN 'Delantero' ELSE 'Defensa' END AS Role
             FROM Players p
             INNER JOIN Teams t ON t.Id = p.TeamId
             WHERE p.Id = @Id

@@ -6,6 +6,7 @@ export type Player = {
   teamName: string;
   name: string;
   shirtNumber: number;
+  role: string;
 };
 
 export type PlayerQuery = PageParams & {
@@ -17,4 +18,5 @@ export type NewPlayer = {
   teamId: string;
   name: string;
   shirtNumber: number;
+  role: string;
 };

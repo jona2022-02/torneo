@@ -1,4 +1,5 @@
 using Torneo.Application.Abstractions;
+using Torneo.Application.Players;
 using Torneo.Domain.Common;
 
 namespace Torneo.Application.Players.UpdatePlayer;
@@ -33,7 +34,13 @@ public sealed class UpdatePlayerHandler
             return Result.Failure(ErrorCodes.PlayerDuplicateNumber, "Ese dorsal ya está usado en el equipo.");
         }
 
-        var updated = player.Update(command.Name, command.ShirtNumber);
+        var goalkeeper = await GoalkeeperGuard.EnsureSingleAsync(_players, player.TeamId, command.Role, player.Id, cancellationToken);
+        if (goalkeeper.IsFailure)
+        {
+            return goalkeeper;
+        }
+
+        var updated = player.Update(command.Name, command.ShirtNumber, command.Role);
         return updated.IsFailure ? updated : await _unitOfWork.CommitAsync(cancellationToken);
     }
 }

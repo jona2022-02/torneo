@@ -8,12 +8,13 @@ public sealed class Player : Entity
     public const int MaxShirtNumber = 99;
     public const int MaxNameLength = 80;
 
-    private Player(Guid id, Guid teamId, string name, int shirtNumber)
+    private Player(Guid id, Guid teamId, string name, int shirtNumber, LineupRole role)
     {
         Id = id;
         TeamId = teamId;
         Name = name;
         ShirtNumber = shirtNumber;
+        Role = role;
     }
 
     public Guid Id { get; }
@@ -24,7 +25,9 @@ public sealed class Player : Entity
 
     public int ShirtNumber { get; private set; }
 
-    public static Result<Player> Create(Guid teamId, string name, int shirtNumber)
+    public LineupRole Role { get; private set; }
+
+    public static Result<Player> Create(Guid teamId, string name, int shirtNumber, LineupRole role = LineupRole.Defensa)
     {
         if (teamId == Guid.Empty)
         {
@@ -43,11 +46,11 @@ public sealed class Player : Entity
             return Result<Player>.Failure(numberValidation.Error!.Code, numberValidation.Error.Message);
         }
 
-        var player = new Player(Guid.NewGuid(), teamId, name.Trim(), shirtNumber);
+        var player = new Player(Guid.NewGuid(), teamId, name.Trim(), shirtNumber, role);
         return Result<Player>.Success(player);
     }
 
-    public Result Update(string name, int shirtNumber)
+    public Result Update(string name, int shirtNumber, LineupRole role)
     {
         var nameValidation = ValidateName(name);
         if (nameValidation.IsFailure)
@@ -63,6 +66,7 @@ public sealed class Player : Entity
 
         Name = name.Trim();
         ShirtNumber = shirtNumber;
+        Role = role;
         return Result.Success();
     }
 

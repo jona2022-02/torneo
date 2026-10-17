@@ -124,6 +124,11 @@ namespace Torneo.Infrastructure.Persistence.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
 
+                    b.Property<int>("Role")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
                     b.Property<int>("ShirtNumber")
                         .HasColumnType("int");
 

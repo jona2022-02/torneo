@@ -1,4 +1,5 @@
 using Torneo.Application.Abstractions;
+using Torneo.Application.Players;
 using Torneo.Application.Common;
 using Torneo.Domain.Common;
 using Torneo.Domain.Players;
@@ -36,7 +37,13 @@ public sealed class CreatePlayerHandler
             return Result<Guid>.Failure(ErrorCodes.PlayerDuplicateNumber, "Ese dorsal ya está usado en el equipo.");
         }
 
-        var player = Player.Create(command.TeamId, command.Name, command.ShirtNumber);
+        var goalkeeper = await GoalkeeperGuard.EnsureSingleAsync(_players, command.TeamId, command.Role, null, cancellationToken);
+        if (goalkeeper.IsFailure)
+        {
+            return ResultMap.Failure<Guid>(goalkeeper);
+        }
+
+        var player = Player.Create(command.TeamId, command.Name, command.ShirtNumber, command.Role);
         if (player.IsFailure)
         {
             return ResultMap.Failure<Guid>(player);
