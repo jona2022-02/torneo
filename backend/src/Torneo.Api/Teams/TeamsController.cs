@@ -31,11 +31,11 @@ public sealed class TeamsController(
     }
 
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(TeamDetail), StatusCodes.Status200OK)]
-    public async Task<ResultEnvelope> Get(Guid id, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(PagedResult<TeamDetail>), StatusCodes.Status200OK)]
+    public async Task<ResultEnvelope> Get(Guid id, [FromQuery] PageQuery page, CancellationToken cancellationToken)
     {
         var result = await byId.Handle(new GetTeamByIdQuery(id), cancellationToken);
-        return HttpResults.Ok(result);
+        return HttpResults.Ok(SinglePage.Wrap(result, page));
     }
 
     [HttpPost]

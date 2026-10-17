@@ -35,11 +35,11 @@ public sealed class PlayersController(
     }
 
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(PlayerDetail), StatusCodes.Status200OK)]
-    public async Task<ResultEnvelope> Get(Guid id, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(PagedResult<PlayerDetail>), StatusCodes.Status200OK)]
+    public async Task<ResultEnvelope> Get(Guid id, [FromQuery] PageQuery page, CancellationToken cancellationToken)
     {
         var result = await byId.Handle(new GetPlayerByIdQuery(id), cancellationToken);
-        return HttpResults.Ok(result);
+        return HttpResults.Ok(SinglePage.Wrap(result, page));
     }
 
     [HttpPost("/api/teams/{teamId:guid}/players")]

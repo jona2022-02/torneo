@@ -31,11 +31,11 @@ public sealed class MatchesController(
     }
 
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(MatchDetail), StatusCodes.Status200OK)]
-    public async Task<ResultEnvelope> Get(Guid id, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(PagedResult<MatchDetail>), StatusCodes.Status200OK)]
+    public async Task<ResultEnvelope> Get(Guid id, [FromQuery] PageQuery page, CancellationToken cancellationToken)
     {
         var result = await byId.Handle(new GetMatchByIdQuery(id), cancellationToken);
-        return HttpResults.Ok(result);
+        return HttpResults.Ok(SinglePage.Wrap(result, page));
     }
 
     [HttpPost]

@@ -1,10 +1,4 @@
-export type Page<T> = {
-  data: T[];
-  pageNumber: number;
-  pageSize: number;
-  totalRecords: number;
-  totalPages: number;
-};
+export type { Page, PageInfo } from "@/services/http/page";
 
 export type PageParams = {
   pageNumber?: number;
