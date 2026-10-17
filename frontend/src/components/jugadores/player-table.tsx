@@ -49,5 +49,28 @@ export function PlayerTable({ players, onEdit }: { players: Player[]; onEdit: (p
     [onEdit],
   );
 
-  return <DataTable columns={columns} data={players} />;
+  return (
+    <>
+      <ul className="grid gap-2 md:hidden">
+        {players.map((player) => (
+          <li key={player.id} className="board flex items-center gap-3 px-4 py-3">
+            <Badge>{player.shirtNumber}</Badge>
+            <Monogram name={player.name} />
+            <span className="min-w-0 flex-1">
+              <span className="block truncate font-medium">{player.name}</span>
+              <span className="block truncate text-sm text-muted-foreground">
+                {player.role} · {player.teamName}
+              </span>
+            </span>
+            <Button variant="ghost" size="sm" onClick={() => onEdit(player)}>
+              Editar
+            </Button>
+          </li>
+        ))}
+      </ul>
+      <div className="hidden md:block">
+        <DataTable columns={columns} data={players} />
+      </div>
+    </>
+  );
 }

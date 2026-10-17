@@ -41,7 +41,26 @@ export function TeamTable({
     [onSort, sortBy, sortDirection],
   );
 
-  return <DataTable columns={columns} data={teams} />;
+  return (
+    <>
+      <ul className="grid gap-2 md:hidden">
+        {teams.map((team) => (
+          <li key={team.id}>
+            <Link href={`/equipos/${team.id}`} className="board flex items-center gap-3 px-4 py-3">
+              <Monogram name={team.name} />
+              <span className="min-w-0 flex-1">
+                <span className="block truncate font-medium">{team.name}</span>
+                <span className="block text-sm text-muted-foreground">{formatWhen(team.createdAt)}</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <div className="hidden md:block">
+        <DataTable columns={columns} data={teams} />
+      </div>
+    </>
+  );
 }
 
 function SortHeader({

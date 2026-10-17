@@ -11,3 +11,4 @@ TestResults/
 node_modules/
 .next/
 frontend/.env.local
+/deploy/

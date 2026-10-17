@@ -43,5 +43,24 @@ export function ScorerTable({ rows, offset }: { rows: Scorer[]; offset: number }
     [offset],
   );
 
-  return <DataTable columns={columns} data={rows} />;
+  return (
+    <>
+      <ul className="grid gap-2 md:hidden">
+        {rows.map((row, index) => (
+          <li key={row.playerId} className="board flex items-center gap-3 px-4 py-3">
+            <Badge variant={offset + index === 0 ? "default" : "secondary"}>{offset + index + 1}</Badge>
+            <Monogram name={row.playerName} />
+            <span className="min-w-0 flex-1">
+              <span className="block truncate font-medium">{row.playerName}</span>
+              <span className="block truncate text-sm text-muted-foreground">{row.teamName}</span>
+            </span>
+            <Badge>{row.goals}</Badge>
+          </li>
+        ))}
+      </ul>
+      <div className="hidden md:block">
+        <DataTable columns={columns} data={rows} />
+      </div>
+    </>
+  );
 }

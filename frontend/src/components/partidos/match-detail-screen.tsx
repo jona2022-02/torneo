@@ -33,7 +33,7 @@ export function MatchDetailScreen() {
             </p>
             <div className="mt-6 grid items-center gap-4 md:grid-cols-[1fr_auto_1fr]">
               <Club name={data.homeTeamName} />
-              <p className="text-center font-display text-7xl tabular-nums">
+              <p className="text-center font-display text-5xl tabular-nums sm:text-7xl">
                 {data.homeScore ?? "–"}<span className="px-3 text-quiet">–</span>{data.awayScore ?? "–"}
               </p>
               <Club name={data.awayTeamName} align="end" />
@@ -65,7 +65,7 @@ function Club({ name, align = "start" }: { name: string; align?: "start" | "end"
   return (
     <div className={`flex items-center gap-3 ${align === "end" ? "md:flex-row-reverse md:text-right" : ""}`}>
       <Monogram name={name} large />
-      <p className="font-display text-2xl">{name}</p>
+      <p className="min-w-0 font-display text-xl break-words sm:text-2xl">{name}</p>
     </div>
   );
 }

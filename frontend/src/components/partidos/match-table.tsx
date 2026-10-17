@@ -42,12 +42,42 @@ export function MatchTable({ matches }: { matches: MatchSummary[] }) {
   );
 
   return (
-    <DataTable
-      columns={columns}
-      data={matches}
-      onRowClick={(match) => router.push(`/partidos/${match.id}`)}
-      onRowHover={(match) => prefetch(match.id)}
-    />
+    <>
+      <ul className="grid gap-2 md:hidden">
+        {matches.map((match) => (
+          <li key={match.id}>
+            <button
+              type="button"
+              className="board w-full px-4 py-3 text-left"
+              onClick={() => router.push(`/partidos/${match.id}`)}
+              onMouseEnter={() => prefetch(match.id)}
+            >
+              <span className="flex items-center justify-between gap-3">
+                <span className="min-w-0">
+                  <span className="block truncate font-medium">{match.homeTeamName}</span>
+                  <span className="block truncate font-medium">{match.awayTeamName}</span>
+                </span>
+                <span className="shrink-0 font-display text-2xl tabular-nums">
+                  {score(match.homeScore)} – {score(match.awayScore)}
+                </span>
+              </span>
+              <span className="mt-3 flex items-center justify-between gap-2">
+                <span className="text-sm text-muted-foreground">{formatWhen(match.kickoff)}</span>
+                <Badge variant={match.status === "Finalizado" ? "secondary" : "default"}>{match.status}</Badge>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="hidden md:block">
+        <DataTable
+          columns={columns}
+          data={matches}
+          onRowClick={(match) => router.push(`/partidos/${match.id}`)}
+          onRowHover={(match) => prefetch(match.id)}
+        />
+      </div>
+    </>
   );
 }
 
